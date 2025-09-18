@@ -261,13 +261,18 @@ class {$nomeClasse}Control {
           case 1:
             \$this->inserir();
           break;
+          case 2:
+            \$this->excluir();
+            break;
        }
     }
     function inserir(){
         {$posts}
         \$this->dao->inserir(\$this->{$nomeTabela});
     }
-    function excluir(){}
+    function excluir(){
+        \$this->dao->excluir(\$_REQUEST['id']);
+    }
     function alterar(){}
     function buscarId({$nomeClasse} \${$nomeTabela}){}
     function buscaTodos(){}
@@ -311,6 +316,11 @@ function ClassesDao(){
             $nomeTabela = array_values((array)$tabela)[0];
             $nomeClasse = ucfirst($nomeTabela);
             $atributos=$this->buscaAtributos($nomeTabela);
+            $id ="";
+            foreach($atributos as $atributo){
+                if($atributo->Key == "PRI")
+                    $id = $atributo->Field;
+            }
             $atributos = array_map(function($obj) {
              return $obj->Field;
          }, $atributos);
@@ -344,6 +354,13 @@ function listaGeral(){
     \$query = \$this->con->query(\$sql);
     \$dados = \$query->fetchAll(PDO::FETCH_ASSOC);
     return \$dados;
+}
+function excluir(\$id){
+    \$sql = "DELETE FROM {$nomeTabela} WHERE {$id}=\$id";
+    \$query = \$this->con->query(\$sql);
+    header("Location:../view/Lista{$nomeTabela}.php");
+
+
 }
 }
 ?>
