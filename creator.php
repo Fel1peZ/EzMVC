@@ -285,7 +285,7 @@ function listaGeral(){
     return \$dados;
 }
 function buscaPorId(\$id){
-\$sql = "select * from {$nomeTabela}where {$id}=\$id";
+\$sql = "select * from {$nomeTabela} where {$id}=\$id";
 \$query = \$this->con->query(\$sql);
 \$dados = \$query->fetch(PDO::FETCH_ASSOC);
     return \$dados;
@@ -322,7 +322,7 @@ EOT;
     require_once('../dao/{$nomeTabela}Dao.php');
     \$obj=null;
     if(isset(\$_GET['id']))
-    \$obj(new {$nomeTabela}Dao())->buscaPorId(\$_GET['id']);
+    \$obj=(new {$nomeTabela}Dao())->buscaPorId(\$_GET['id']);
     \$acao=\$obj?3:1;
 ?>
 <html>
